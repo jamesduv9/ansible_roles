@@ -1,0 +1,1 @@
+For DevNet Expert Studies. Exploring creating the following roles, and trying to make them reflect desired state of the config. They should remove configs not in host vars... something that most cisco ansible modules do not do.
