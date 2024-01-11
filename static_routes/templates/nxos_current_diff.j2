@@ -1,0 +1,7 @@
+{% for line in ip_routes.stdout_lines[0] %}
+{% if line not in desired_ip_routes | split("\n") %}
+no {{ line }}
+{% else %}
+{{ line }}
+{% endif %}
+{% endfor %}

@@ -3,3 +3,8 @@
   ansible.builtin.include_tasks: 
     file: ios_xe_static_routes.yml
   when: ansible_network_os == 'ios'
+
+- name: NXOS conditional
+  ansible.builtin.include_tasks:
+    file: nxos_static_routes.yml
+  when: ansible_network_os == 'nxos'

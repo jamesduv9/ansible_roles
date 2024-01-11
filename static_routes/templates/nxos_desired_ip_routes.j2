@@ -1,0 +1,3 @@
+{% for route in host_static_routes %}
+ip route {{ route.destination }}/{{ route.mask | mask_to_cidr }} {{ route.nh }} {{ route.metric }}
+{% endfor %}

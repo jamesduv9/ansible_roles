@@ -1,38 +1,25 @@
-Role Name
-=========
+# static_routes
+Configure static routes for IOS-XE and NXOS in an IaC fashion. Assumes a standard way of defining static routes in your host vars.
 
-A brief description of the role goes here.
+Ex.
+```
+host_static_routes:
+  - nh: 10.2.2.2
+    destination: 100.2.2.2
+    mask: 255.255.255.255
+    metric: 10
+  - nh: 123.123.123.123
+    mask: 255.0.0.0
+    destination: 192.0.0.0
+    metric: 20
+```
+##Workflow
+1. Get current config
+2. Get desired config (templated host vars)
+3. Find lines in current config that aren't in desired config, append "no "
+4. Append desired config to end of list
+5. Send to device
 
-Requirements
-------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
-
-Role Variables
---------------
-
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
-
-Dependencies
-------------
-
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
-
-Example Playbook
-----------------
-
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
-
-License
--------
-
-BSD
-
-Author Information
-------------------
-
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+##Custom Filter
+Uses a single custom filter `mask_to_cidr` to accept a subnet in format 255.255.255.255 and return it in prefix length format (ex. 32). This is needed for converting to nxos configs

@@ -1,21 +1,24 @@
+
 - name: Get current static route configuration
-  cisco.ios.ios_command:
+  cisco.nxos.nxos_command:
     commands:
-      - show run | include ip route
+      - show run | include "ip route"
   register: ip_routes
 
-- name: Get desired static route configuration
+- name: Get desired configs
   set_fact:
-    desired_ip_routes: "{{ lookup('template', 'templates/xe_desired_ip_routes.j2') }}"
+    desired_ip_routes: "{{ lookup('template', 'templates/nxos_desired_ip_routes.j2') }}"
 
 - name: Find bad lines in current config
   set_fact:
-    current_diff: "{{ lookup('template', 'templates/xe_current_diff.j2') }}"
+    current_diff: "{{ lookup('template', 'templates/nxos_current_diff.j2') }}"
 
 - name: Combine bad lines with desired
   set_fact:
     final_output: "{{ lookup('template', 'templates/final_output.j2') }}"
 
 - name: Send config to device
-  cisco.ios.ios_config:
+  cisco.nxos.nxos_config:
     lines: "{{ final_output }}"
+
+
