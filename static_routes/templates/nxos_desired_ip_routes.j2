@@ -1,3 +1,4 @@
+{% if host_static_routes %}
 {% for route in host_static_routes %}
 {% if route.vrf is defined %}
 ip route {{ route.destination }}/{{ route.mask | mask_to_cidr }} {{ route.nh }} vrf {{ route.vrf }} {{ route.metric }}
@@ -5,3 +6,4 @@ ip route {{ route.destination }}/{{ route.mask | mask_to_cidr }} {{ route.nh }} 
 ip route {{ route.destination }}/{{ route.mask | mask_to_cidr }} {{ route.nh }} {{ route.metric }}
 {% endif %}
 {% endfor %}
+{% endif %}
